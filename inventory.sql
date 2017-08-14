@@ -21,14 +21,14 @@ USE `db_inventory_pos`;
 DROP TABLE IF EXISTS `tb_filateli`;
 
 CREATE TABLE `tb_filateli` (
-  `id_filateli` varchar(7) NOT NULL,
-  `nama_filateli` varchar(100) DEFAULT NULL,
-  `nominal` int(11) DEFAULT NULL,
-  `biaya_cetak` float DEFAULT NULL,
-  `stok` int(11) DEFAULT NULL,
-  `tahun` year(4) DEFAULT NULL,
+  `id_filateli` VARCHAR(7) NOT NULL,
+  `nama_filateli` VARCHAR(100) DEFAULT NULL,
+  `nominal` INT(11) DEFAULT NULL,
+  `biaya_cetak` FLOAT DEFAULT NULL,
+  `stok` INT(11) DEFAULT NULL,
+  `tahun` YEAR(4) DEFAULT NULL,
   PRIMARY KEY (`id_filateli`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=INNODB DEF`tb_filateli``db_inventory_pos`AULT CHARSET=latin1;
 
 /*Data for the table `tb_filateli` */
 
@@ -37,10 +37,10 @@ CREATE TABLE `tb_filateli` (
 DROP TABLE IF EXISTS `tb_jenis_kantor`;
 
 CREATE TABLE `tb_jenis_kantor` (
-  `id_jenis` varchar(5) NOT NULL,
-  `jenis_kantor` varchar(100) DEFAULT NULL,
+  `id_jenis` VARCHAR(5) NOT NULL,
+  `jenis_kantor` VARCHAR(100) DEFAULT NULL,
   PRIMARY KEY (`id_jenis`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_jenis_kantor` */
 
