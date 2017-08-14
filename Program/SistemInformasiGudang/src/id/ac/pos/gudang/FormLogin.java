@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package id.ac.pos.gudang;
 
+import id.ac.pos.gudang.entity.User;
+import id.ac.pos.gudang.utility.koneksi;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,12 +23,18 @@ public class FormLogin extends javax.swing.JFrame {
     /**
      * Creates new form FormLogin
      */
-    
-    protected String username;
-    protected String password;
-    
+    Connection con;
+    Statement stat;
+    ResultSet rs;
+    String sql;
+
     public FormLogin() {
         initComponents();
+        //pemanggilan fungsi koneksi database yang sudah kita buat pada class koneksi.java
+        koneksi DB = new koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
     }
 
     /**
@@ -108,42 +119,49 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_buttonResetActionPerformed
 
     private void buttonLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogin1ActionPerformed
         // TODO add your handling code here:
-        String username = fieldUsername.getText();
-        String password = fieldPassword.getText();
-        if(fieldUsername.getText().trim().equals("oyoy") && password.equals("diar")) {
-            JOptionPane.showMessageDialog(null, "Login Sukses !");
-            
-            FormHome fh = new FormHome();
-            fh.setLocationRelativeTo(null);
-            fh.setVisible(true);
-            this.setVisible(false); //form login akan tertutup
-        } else {
-            JOptionPane.showMessageDialog(null,"Login Gagal","",1);
-            JOptionPane.showMessageDialog(null,"Username dan Password Invalid","",1);
-            fieldUsername.setText(null);//set nilai txtUser menjadi kosong
-            fieldPassword.setText(null);//set nilai txtPass menjadi kosong
+        try {
+            sql = "SELECT * FROM tb_user WHERE username='" + fieldUsername.getText() 
+                    + "' AND password='" + fieldPassword.getText()+"'";
+            rs = stat.executeQuery(sql);
+            if (rs.next()) {
+                if (fieldPassword.getText().equals(rs.getString("password")) 
+                        && fieldUsername.getText().equals(rs.getString("username"))) {
+                    JOptionPane.showMessageDialog(null, "Login Sukses !");
+                    FormHome fh = new FormHome();
+                    fh.setLocationRelativeTo(null);
+                    fh.setVisible(true);
+                    this.setVisible(false); //form login akan tertutup
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Login Gagal", "", 1);
+                JOptionPane.showMessageDialog(null, "Username dan Password Invalid", "", 1);
+                fieldUsername.setText(null);//set nilai txtUser menjadi kosong
+                fieldPassword.setText(null);//set nilai txtPass menjadi kosong
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
-        
     }//GEN-LAST:event_buttonLogin1ActionPerformed
 
     private void fieldUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldUsernameKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             fieldPassword.requestFocus();
         }
     }//GEN-LAST:event_fieldUsernameKeyPressed
 
     private void fieldPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldPasswordKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buttonLogin1.requestFocus();
+            fieldUsername.setText(null);//set nilai txtUser menjadi kosong
+            fieldPassword.setText(null);//set nilai txtPass menjadi kosongFF
         }
     }//GEN-LAST:event_fieldPasswordKeyPressed
 
@@ -196,4 +214,5 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JLabel labelPassword;
     private javax.swing.JLabel labelUsername;
     // End of variables declaration//GEN-END:variables
+
 }
