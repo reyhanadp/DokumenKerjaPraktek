@@ -1,0 +1,2 @@
+SM10	telkomsel	10000	6756	12000	
+SM50	telkomsel	51000	52000	52000	
